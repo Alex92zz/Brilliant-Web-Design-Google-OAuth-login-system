@@ -1,0 +1,26 @@
+
+
+
+RewriteCond %{SCRIPT_FILENAME} -d [OR]
+RewriteCond %{SCRIPT_FILENAME} -f
+RewriteRule "(^|/)\." - [F]
+
+RewriteEngine on
+
+RewriteOptions inherit
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-SSL} !on
+RewriteCond %{HTTP_HOST} ^brilliantwebdesign\.co\.uk$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.brilliantwebdesign\.co\.uk$
+RewriteRule ^/?$ "https\:\/\/brilliantwebdesign\.co\.uk\/" [R=301,L]
+
+#remove html file extension-e.g. https://example.com/file.html will become https://example.com/file
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.*)$ $1.html [NC,L]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [NC,L]
